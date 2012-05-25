@@ -63,7 +63,7 @@ SBT_SHA1="5b15ba0fc63e355d47293def4bc2e58da6f03787"
 ## in 0.10 start-script will depend on package, if packaging
 ## is required - it may not be, we can run .class files or a package-war
 ## instead.
-SBT_TASKS="clean compile stage"
+SBT_TASKS="clean compile test stage"
 
 
 if [ ! -d .ivy2/cache ]; then
