@@ -69,7 +69,9 @@ if [ ! -f "$SBT_BINDIR"/"$SBT_JAR" ]; then
 
   echo "-----> Building app with sbt"
   curl --silent --max-time 60 -O --location $SBT_URL
-
+  echo "#!/usr/bin/env bash" > sbt
+  echo "/usr/bin/java -Dsbt.boot.properties=/app/.sbt_home/bin/sbt.boot.properties  -Duser.home=/app/.sbt_home -Divy.default.ivy.user.dir=/app/.sbt_home/.ivy2 -jar /app/.sbt_home/bin/$SBT_JAR \"\$@\"" >> sbt
+  chmod a+x sbt
   ## some of the downloads don't have the version in the name,
   ## fix it.
   if [ -f "sbt-launch.jar" ] ; then
@@ -85,10 +87,10 @@ curl --silent --max-time 10 --location $SBT_PROPS_URL --output "$SBT_BINDIR"/sbt
 
 
 #echo -n "-----> Intsalling plugins..."
-HEROKU_PLUGIN="Heroku-0.11.0.scala"
+HEROKU_PLUGIN="Heroku-0.11.3.scala"
 mkdir -p "$SBT_USER_HOME/.sbt/plugins" && curl --silent --max-time 10 --location "http://s3.amazonaws.com/heroku-jvm-langpack-scala/$HEROKU_PLUGIN" --output "$SBT_USER_HOME/.sbt/plugins/$HEROKU_PLUGIN"
 
-HEROKU_PLUGINS_CONFIG="heroku-plugins-0.11.0.sbt"
+HEROKU_PLUGINS_CONFIG="heroku-plugins-0.11.3.sbt"
 mkdir -p "$SBT_USER_HOME/.sbt/plugins" && curl --silent --max-time 10 --location "http://s3.amazonaws.com/heroku-jvm-langpack-scala/$HEROKU_PLUGINS_CONFIG"  --output "$SBT_USER_HOME/.sbt/plugins/$HEROKU_PLUGINS_CONFIG"
 #echo " done"
 
